@@ -1,16 +1,30 @@
 {
-  "name": "tusur_compgraphics",
-  "version": "0.1.0",
+  "name": "tusur-compgraphics",
+  "version": "0.2.0",
   "private": true,
+  "description": "Tusur OpenGL labs",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "eject": "react-scripts eject"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gpont/tusur-compgraph.git"
+  },
+  "contributors": [
+    "Eugeniy Guzhikhin <gpont97@gmail.com>",
+    "Gutman Dmitriy <fryngies@tomengine.ru>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gpont/tusur-compmath/issues"
+  },
+  "homepage": "https://github.com/gpont/tusur-compmath#readme",
   "dependencies": {
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-scripts": "1.1.1"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
   }
 }
