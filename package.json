@@ -1,7 +1,9 @@
 {
-  "name": "tusur_compgraphics",
-  "version": "0.1.0",
+  "name": "tusur-compgraphics",
+  "version": "0.2.0",
   "private": true,
+  "description": "Tusur OpenGL labs",
+  "main": "src/index.tsx",
   "dependencies": {
     "react": "^16.6.1",
     "react-dom": "^16.6.1",
@@ -22,6 +24,19 @@
     "eject": "react-scripts eject",
     "lint": "tslint \"src/**/*.{ts,tsx}\""
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gpont/tusur-compgraph.git"
+  },
+  "contributors": [
+    "Eugeniy Guzhikhin <gpont97@gmail.com>",
+    "Gutman Dmitriy <fryngies@tomengine.ru>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gpont/tusur-compmath/issues"
+  },
+  "homepage": "https://github.com/gpont/tusur-compmath#readme",
   "browserslist": [
     ">0.2%",
     "not dead",
