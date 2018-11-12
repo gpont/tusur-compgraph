@@ -1,87 +1,89 @@
-import { initBuffers, initShaderProgram, bindShadersToBuffers } from './utils';
+import { bindShadersToBuffers, initBuffers, initShaderProgram, Buffers } from './utils';
 
 export default class Triangle {
-	constructor(gl, width, height) {
-		this.gl = gl;
+  gl: WebGLRenderingContext;
 
-		this.initField(width, height);
-		this.draw();
-	}
+  constructor(gl: WebGLRenderingContext, width: number, height: number) {
+    this.gl = gl;
 
-	initField(width, height) {
-		const gl = this.gl;
+    this.initField(width, height);
+    this.draw();
+  }
 
-		gl.clearColor(0, 0, 0, 1);
-		gl.clear(gl.COLOR_BUFFER_BIT);
-		gl.viewport(0, 0, width, height);
-	}
+  initField(width: number, height: number) {
+    const gl = this.gl;
 
-	initShaders(buffers) {
-		const gl = this.gl;
+    gl.clearColor(0, 0, 0, 1);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.viewport(0, 0, width, height);
+  }
 
-		const vertexCode = `
-			attribute vec3 aVertexPosition;
-			attribute vec4 aVertexColor;
-			varying lowp vec4 vColor;
-			void main(void) {
-			 gl_Position = vec4(aVertexPosition, 1.0);
-			 gl_PointSize = 10.0;
-			 vColor = aVertexColor;
-			}
-		`;
+  initShaders(buffers: Buffers) {
+    const gl = this.gl;
 
-		const fragmentCode = `
-			varying lowp vec4 vColor;
-			void main(void) {
-			 gl_FragColor = vColor;
-			}
-		`;
+    const vertexCode = `
+      attribute vec3 aVertexPosition;
+      attribute vec4 aVertexColor;
+      varying lowp vec4 vColor;
+      void main(void) {
+       gl_Position = vec4(aVertexPosition, 1.0);
+       gl_PointSize = 10.0;
+       vColor = aVertexColor;
+      }
+    `;
 
-		const shaderProgram = initShaderProgram(gl, vertexCode, fragmentCode);
-		gl.useProgram(shaderProgram);
+    const fragmentCode = `
+      varying lowp vec4 vColor;
+      void main(void) {
+       gl_FragColor = vColor;
+      }
+    `;
 
-		const shadersInfo = [{
-			location: gl.getAttribLocation(shaderProgram, 'aVertexPosition'),
-			numberComponents: 3,
-			type: gl.FLOAT,
-			normalize: false,
-			stride: 0,
-			offset: 0,
-			buffer: buffers.position
-		}, {
-			location: gl.getAttribLocation(shaderProgram, 'aVertexColor'),
-			numberComponents: 3,
-			type: gl.FLOAT,
-			normalize: false,
-			stride: 0,
-			offset: 0,
-			buffer: buffers.color
-		}];
+    const shaderProgram = initShaderProgram(gl, vertexCode, fragmentCode);
+    gl.useProgram(shaderProgram);
 
-		bindShadersToBuffers(gl, shadersInfo);
-	}
+    const shadersInfo = [{
+      location: gl.getAttribLocation(shaderProgram, 'aVertexPosition'),
+      numberComponents: 3,
+      type: gl.FLOAT,
+      normalize: false,
+      stride: 0,
+      offset: 0,
+      // TODO: May be null in some cases
+      buffer: buffers.position as WebGLBuffer,
+    }, {
+      location: gl.getAttribLocation(shaderProgram, 'aVertexColor'),
+      numberComponents: 3,
+      type: gl.FLOAT,
+      normalize: false,
+      stride: 0,
+      offset: 0,
+      buffer: buffers.color as WebGLBuffer,
+    }];
 
-	draw() {
-		const gl = this.gl;
+    bindShadersToBuffers(gl, shadersInfo);
+  }
 
-		const vertices = [
-			-0.5, 0.5, 0.0,
-			0.0, 0.5, 0.0,
-			-0.25, -0.25, 0.0,
-		];
+  draw() {
+    const gl = this.gl;
 
-		const colors = [
-			1.0, 1.0, 1.0, 1.0, // white
-			1.0, 0.0, 0.0, 1.0, // red
-			0.0, 1.0, 0.0, 1.0, // green
-			0.0, 0.0, 1.0, 1.0, // blue
-		];
+    const vertices = [
+      -0.5, 0.5, 0.0,
+      0.0, 0.5, 0.0,
+      -0.25, -0.25, 0.0,
+    ];
 
-		const buffers = initBuffers(gl, vertices, colors);
+    const colors = [
+      1.0, 1.0, 1.0, 1.0, // white
+      1.0, 0.0, 0.0, 1.0, // red
+      0.0, 1.0, 0.0, 1.0, // green
+      0.0, 0.0, 1.0, 1.0, // blue
+    ];
 
-		this.initShaders(buffers);
+    const buffers = initBuffers(gl, vertices, colors);
 
-		gl.drawArrays(gl.TRIANGLES, 0, 3);
-	}
+    this.initShaders(buffers);
+
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+  }
 }
-
