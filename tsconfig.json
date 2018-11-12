@@ -6,7 +6,12 @@
     "sourceMap": true,
     "experimentalDecorators": true,
     "jsx": "react",
-    "lib": ["dom", "es2015", "es2016", "es7"],
+    "lib": [
+      "dom",
+      "es2015",
+      "es2016",
+      "es7"
+    ],
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
     "noEmitHelpers": true,
@@ -15,10 +20,18 @@
     "noImplicitReturns": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true
   },
   "exclude": [
     "node_modules",
     "build"
+  ],
+  "include": [
+    "src"
   ]
 }
