@@ -12,7 +12,6 @@
     }],
     "eofline": true,
     "interface-over-type-literal": true,
-    "interface-name": [true, "always-prefix"],
     "max-line-length": {
       "options": [120]
     },
@@ -21,6 +20,7 @@
     "jsx-ban-props": [true,
       ["style", "Use Styled Components to change component's appearance."]
     ],
-    "function-name": false
+    "function-name": false,
+    "ter-arrow-parens": false
   }
 }
