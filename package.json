@@ -3,11 +3,26 @@
   "version": "0.2.0",
   "private": true,
   "description": "Tusur OpenGL labs",
-  "main": "src/index.js",
+  "main": "src/index.tsx",
+  "dependencies": {
+    "react": "^16.6.1",
+    "react-dom": "^16.6.1",
+    "react-scripts": "2.1.1"
+  },
+  "devDependencies": {
+    "@types/react": "~16.7.3",
+    "@types/react-dom": "^16.0.9",
+    "tslint": "^5.11.0",
+    "tslint-config-airbnb": "^5.11.0",
+    "tslint-react": "^3.6.0",
+    "typescript": "^3.1.6"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "eject": "react-scripts eject"
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "lint": "tslint \"src/**/*.{ts,tsx}\""
   },
   "repository": {
     "type": "git",
@@ -22,9 +37,10 @@
     "url": "https://github.com/gpont/tusur-compmath/issues"
   },
   "homepage": "https://github.com/gpont/tusur-compmath#readme",
-  "dependencies": {
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-scripts": "1.1.1"
-  }
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
