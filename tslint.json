@@ -1,0 +1,27 @@
+{
+  "extends": ["tslint-config-airbnb", "tslint-react"],
+  "rules": {
+    "indent": [true, "spaces"],
+    "ter-indent": [true, "spaces"],
+    "import-name": false,
+    "align": false,
+    "variable-name": [true, "ban-keywords", "check-format", "allow-pascal-case"],
+    "ordered-imports": [true, {
+      "grouped-imports": true,
+      "import-sources-order": "lowercase-last",
+      "named-imports-order": "lowercase-first",
+      "module-source-path": "full"
+    }],
+    "eofline": true,
+    "interface-over-type-literal": true,
+    "interface-name": [true, "always-prefix"],
+    "max-line-length": {
+      "options": [120]
+    },
+    "arrow-return-shorthand": [true, "multiline"],
+    "member-ordering": [true, {"order": "fields-first"}],
+    "jsx-ban-props": [true,
+      ["style", "Use Styled Components to change component's appearance."]
+    ]
+  }
+}
