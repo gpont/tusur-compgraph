@@ -1,8 +1,6 @@
 {
   "extends": ["tslint-config-airbnb", "tslint-react"],
   "rules": {
-    "indent": [true, "spaces"],
-    "ter-indent": [true, "spaces"],
     "import-name": false,
     "align": false,
     "variable-name": [true, "ban-keywords", "check-format", "allow-pascal-case"],
@@ -22,6 +20,7 @@
     "member-ordering": [true, {"order": "fields-first"}],
     "jsx-ban-props": [true,
       ["style", "Use Styled Components to change component's appearance."]
-    ]
+    ],
+    "function-name": false
   }
 }
