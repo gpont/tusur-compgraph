@@ -5,22 +5,28 @@
   "description": "Tusur OpenGL labs",
   "main": "src/index.tsx",
   "dependencies": {
-    "react": "^16.6.1",
-    "react-dom": "^16.6.1",
-    "react-scripts": "2.1.1"
+    "@craco/craco": "3",
+    "@types/styled-components": "^4.1.0",
+    "antd": "^3.10.7",
+    "craco-antd": "^1.2.0",
+    "react": "^16.7.0-alpha.2",
+    "react-dom": "^16.7.0-alpha.2",
+    "react-scripts": "2.1.1",
+    "styled-components": "^4.1.1"
   },
   "devDependencies": {
     "@types/react": "~16.7.3",
     "@types/react-dom": "^16.0.9",
+    "babel-plugin-import": "^1.11.0",
     "tslint": "^5.11.0",
     "tslint-config-airbnb": "^5.11.0",
     "tslint-react": "^3.6.0",
     "typescript": "^3.1.6"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "tslint \"src/**/*.{ts,tsx}\""
   },

@@ -1,13 +1,13 @@
 import * as React from 'react';
 
-import WebGLCanvas from '../WebGLCanvas/WebGLCanvas';
+import WebGL2Var6 from '../WebGL2.6/component';
 
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <WebGLCanvas />
+      <WebGL2Var6 />
     </div>
   );
 }
