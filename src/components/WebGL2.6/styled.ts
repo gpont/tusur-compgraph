@@ -1,7 +1,15 @@
-import styled from 'styled-components/macro';
+import { Layout as AntLayout, Menu as AntMenu } from 'antd';
+import styled from 'styled-components';
 
-export const Container = styled.div`
+export const Layout = styled(AntLayout)`
+  min-height: 100vh;
+`;
+
+export const Sider = styled(AntLayout.Sider)`
   background: #fff;
-  display: flex;
-  flex-direction: column;
+`;
+
+export const Menu = styled(AntMenu)`
+  border-right: 0;
+  height: 100%;
 `;
