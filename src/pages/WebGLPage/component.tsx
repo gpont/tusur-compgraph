@@ -1,9 +1,9 @@
 import { Layout, Menu } from 'antd';
 import * as React from 'react';
 
+import { Scene } from '../../components/Scene/component';
 import { GlPrimitives } from '../../glUtils/types';
 import { capitalize } from '../../utils/string';
-import { Scene } from '../Scene/component';
 
 import * as Styled from './styled';
 
