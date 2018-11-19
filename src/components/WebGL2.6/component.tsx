@@ -6,6 +6,7 @@ import { GlPrimitives } from '../../glUtils/types';
 import { labelify } from '../../utils/cascader';
 
 import { Container } from './styled';
+import { bindShadersToBuffers, initBuffers, initShaderProgram } from "../WebGLCanvas/utils";
 
 interface TaskBaseProps {
   gl: WebGLRenderingContext;
@@ -17,50 +18,34 @@ interface SceneProps {
 
 const renderOptions: CascaderOptionType[] = [
   {
+    value: '1 lab',
+    children: [
+      { value: GlPrimitives.GL_TRIANGLE_STRIP, },
+    ]
+  }, {
     value: 'points',
     children: [
-      {
-        value: GlPrimitives.GL_POINTS,
-      },
+      { value: GlPrimitives.GL_POINTS, },
     ],
-  },
-  {
+  }, {
     value: 'lines',
     children: [
-      {
-        value: GlPrimitives.GL_LINES,
-      },
-      {
-        value: GlPrimitives.GL_LINES_STRIP,
-      },
-      {
-        value: GlPrimitives.GL_LINES_LOOP,
-      },
+      { value: GlPrimitives.GL_LINES, },
+      { value: GlPrimitives.GL_LINES_STRIP, },
+      { value: GlPrimitives.GL_LINES_LOOP, },
     ],
-  },
-  {
+  }, {
     value: 'triangles',
     children: [
-      {
-        value: GlPrimitives.GL_TRIANGLES,
-      },
-      {
-        value: GlPrimitives.GL_TRIANGLE_STRIP,
-      },
-      {
-        value: GlPrimitives.GL_TRIANGLE_FAN,
-      },
+      { value: GlPrimitives.GL_TRIANGLES, },
+      { value: GlPrimitives.GL_TRIANGLE_STRIP, },
+      { value: GlPrimitives.GL_TRIANGLE_FAN, },
     ],
-  },
-  {
+  }, {
     value: 'quads',
     children: [
-      {
-        value: GlPrimitives.GL_QUADS,
-      },
-      {
-        value: GlPrimitives.GL_QUAD_STRIP,
-      },
+      { value: GlPrimitives.GL_QUADS, },
+      { value: GlPrimitives.GL_QUAD_STRIP, },
     ],
   },
 ].map(labelify);
@@ -70,106 +55,122 @@ const tasks: { [key in GlPrimitives]: (props: TaskBaseProps) => void } = {
   [GlPrimitives.GL_POINTS](props: TaskBaseProps) {
     const { gl } = props;
 
-    const vertices = [-0.5, 0.5, 0.0, 0.0, 0.5, 0.0, -0.25, 0.25, 0.0];
+    const vertices = [
+      -0.5, 0.5, 0.0,
+      0.0, 0.5, 0.0,
+      -0.25, 0.25, 0.0
+    ];
 
-    // Create an empty buffer object to store the vertex buffer
-    const vertexBuffer = gl.createBuffer();
+    const colors = [
+      1.0, 1.0, 1.0, 1.0, // white
+      1.0, 0.0, 0.0, 1.0, // red
+      0.0, 1.0, 0.0, 1.0, // green
+      0.0, 0.0, 1.0, 1.0, // blue
+    ];
 
-    // Bind appropriate array buffer to it
-    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+    const buffers = initBuffers(gl, vertices, colors);
 
-    // Pass the vertex data to the buffer
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+    const vertexCode = `
+      attribute vec3 coordinates;
+      void main(void) {
+        gl_Position = vec4(coordinates, 1.0);
+        gl_PointSize = 10.0;
+      }
+    `;
 
-    // Unbind the buffer
-    gl.bindBuffer(gl.ARRAY_BUFFER, null);
+    const fragmentCode = `
+      void main(void) {
+        gl_FragColor = vec4(0.0, 0.0, 0.0, 0.1);
+      }
+    `;
 
-    /*=========================Shaders========================*/
-
-    // vertex shader source code
-    const vertCode =
-      'attribute vec3 coordinates;' +
-      'void main(void) {' +
-      ' gl_Position = vec4(coordinates, 1.0);' +
-      'gl_PointSize = 10.0;' +
-      '}';
-
-    // Create a vertex shader object
-    const vertShader = gl.createShader(gl.VERTEX_SHADER);
-    if (!vertShader) {
-      throw Error('Failed to initialize vertex shader');
-    }
-
-    // Attach vertex shader source code
-    gl.shaderSource(vertShader, vertCode);
-
-    // Compile the vertex shader
-    gl.compileShader(vertShader);
-
-    // fragment shader source code
-    const fragCode = 'void main(void) { gl_FragColor = vec4(0.0, 0.0, 0.0, 0.1);}';
-
-    // Create fragment shader object
-    const fragShader = gl.createShader(gl.FRAGMENT_SHADER);
-    if (!fragShader) {
-      throw Error('Failed to initialize frag shader');
-    }
-
-    // Attach fragment shader source code
-    gl.shaderSource(fragShader, fragCode);
-
-    // Compile the fragment shader
-    gl.compileShader(fragShader);
-
-    // Create a shader program object to store
-    // the combined shader program
-    const shaderProgram = gl.createProgram();
-    if (shaderProgram === null) {
-      throw Error('Failed to initialize shader program');
-    }
-
-    // Attach a vertex shader
-    gl.attachShader(shaderProgram, vertShader);
-
-    // Attach a fragment shader
-    gl.attachShader(shaderProgram, fragShader);
-
-    // Link both programs
-    gl.linkProgram(shaderProgram);
-
-    // Use the combined shader program object
+    const shaderProgram = initShaderProgram(gl, vertexCode, fragmentCode);
     gl.useProgram(shaderProgram);
 
-    /*======== Associating shaders to buffer objects ========*/
+    const shadersInfo = [{
+      location: gl.getAttribLocation(shaderProgram, 'coordinates'),
+      numberComponents: 3,
+      type: gl.FLOAT,
+      normalize: false,
+      stride: 0,
+      offset: 0,
+      // TODO: May be null in some cases
+      buffer: buffers.position as WebGLBuffer,
+    }];
 
-    // Bind vertex buffer object
-    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+    bindShadersToBuffers(gl, shadersInfo);
 
-    // Get the attribute location
-    const coord = gl.getAttribLocation(shaderProgram, 'coordinates');
+    // gl.clearColor(0, 0, 0, 1);
+    // gl.clear(gl.COLOR_BUFFER_BIT);
+    // gl.viewport(0, 0, 640, 480);
 
-    // Point an attribute to the currently bound VBO
-    gl.vertexAttribPointer(coord, 3, gl.FLOAT, false, 0, 0);
-
-    // Enable the attribute
-    gl.enableVertexAttribArray(coord);
-
-    /*============= Drawing the primitive ===============*/
-
-    // Clear the canvas
-    gl.clearColor(0.5, 0.5, 0.5, 0.9);
-
-    // Enable the depth test
-    gl.enable(gl.DEPTH_TEST);
-
-    // Clear the color buffer bit
-    gl.clear(gl.COLOR_BUFFER_BIT);
-
-    // Set the view port
-    gl.viewport(0, 0, 640, 480);
-
-    // Draw the triangle
     gl.drawArrays(gl.POINTS, 0, 3);
+  },
+  [GlPrimitives.GL_TRIANGLE_STRIP](props: TaskBaseProps) {
+    const { gl } = props;
+
+    const vertices = [
+      -0.5, 0.5, 0.0,
+      0.0, 0.5, 0.0,
+      -0.25, -0.25, 0.0,
+    ];
+
+    const colors = [
+      1.0, 1.0, 1.0, 1.0, // white
+      1.0, 0.0, 0.0, 1.0, // red
+      0.0, 1.0, 0.0, 1.0, // green
+      0.0, 0.0, 1.0, 1.0, // blue
+    ];
+
+    const buffers = initBuffers(gl, vertices, colors);
+
+    const vertexCode = `
+      attribute vec3 aVertexPosition;
+      attribute vec4 aVertexColor;
+      varying lowp vec4 vColor;
+      void main(void) {
+       gl_Position = vec4(aVertexPosition, 1.0);
+       gl_PointSize = 10.0;
+       vColor = aVertexColor;
+      }
+    `;
+
+    const fragmentCode = `
+      varying lowp vec4 vColor;
+      void main(void) {
+       gl_FragColor = vColor;
+      }
+    `;
+
+    const shaderProgram = initShaderProgram(gl, vertexCode, fragmentCode);
+    gl.useProgram(shaderProgram);
+
+    const shadersInfo = [{
+      location: gl.getAttribLocation(shaderProgram, 'aVertexPosition'),
+      numberComponents: 3,
+      type: gl.FLOAT,
+      normalize: false,
+      stride: 0,
+      offset: 0,
+      // TODO: May be null in some cases
+      buffer: buffers.position as WebGLBuffer,
+    }, {
+      location: gl.getAttribLocation(shaderProgram, 'aVertexColor'),
+      numberComponents: 3,
+      type: gl.FLOAT,
+      normalize: false,
+      stride: 0,
+      offset: 0,
+      buffer: buffers.color as WebGLBuffer,
+    }];
+
+    bindShadersToBuffers(gl, shadersInfo);
+
+    // gl.clearColor(0, 0, 0, 1);
+    // gl.clear(gl.COLOR_BUFFER_BIT);
+    // gl.viewport(0, 0, 640, 480);
+
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
   },
 };
 
