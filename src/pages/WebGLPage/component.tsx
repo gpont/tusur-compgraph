@@ -44,6 +44,11 @@ const menuItems: MenuOption[] = [
         { value: GlPrimitives.GL_QUAD_STRIP },
       ],
     }],
+  }, {
+    value: 'Lab 3',
+    children: [{
+      value: '7 option',
+    }],
   },
 ];
 
