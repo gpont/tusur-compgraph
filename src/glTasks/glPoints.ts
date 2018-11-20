@@ -1,5 +1,6 @@
 import { bindShadersToBuffers, initBuffers, initShaderProgram } from '../glUtils';
-import { loadShaders } from '../utils/loadShaders';
+import fragmentShader from '../shaders/fragment/glPoints';
+import vertexShader from '../shaders/vertex/glPoints';
 
 import { TaskFuncBaseProps } from './types';
 
@@ -21,27 +22,24 @@ export default (props: TaskFuncBaseProps) => {
 
   const buffers = initBuffers(gl, vertices, colors);
 
-  loadShaders(['task1.vert', 'task1.frag'])
-    .then(([vertexCode, fragmentCode]: string[]) => {
-      const shaderProgram = initShaderProgram(gl, vertexCode, fragmentCode);
-      gl.useProgram(shaderProgram);
+  const shaderProgram = initShaderProgram(gl, vertexShader, fragmentShader);
+  gl.useProgram(shaderProgram);
 
-      const shadersInfo = [{
-        location: gl.getAttribLocation(shaderProgram, 'coordinates'),
-        numberComponents: 3,
-        type: gl.FLOAT,
-        normalize: false,
-        stride: 0,
-        offset: 0,
-        // TODO: May be null in some cases
-        buffer: buffers.position as WebGLBuffer,
-      }];
+  const shadersInfo = [{
+    location: gl.getAttribLocation(shaderProgram, 'coordinates'),
+    numberComponents: 3,
+    type: gl.FLOAT,
+    normalize: false,
+    stride: 0,
+    offset: 0,
+    // TODO: May be null in some cases
+    buffer: buffers.position as WebGLBuffer,
+  }];
 
-      bindShadersToBuffers(gl, shadersInfo);
+  bindShadersToBuffers(gl, shadersInfo);
 
-      gl.clearColor(0, 0, 0, 1);
-      gl.clear(gl.COLOR_BUFFER_BIT);
+  gl.clearColor(0, 0, 0, 1);
+  gl.clear(gl.COLOR_BUFFER_BIT);
 
-      gl.drawArrays(gl.POINTS, 0, 3);
-    });
+  gl.drawArrays(gl.POINTS, 0, 3);
 };
