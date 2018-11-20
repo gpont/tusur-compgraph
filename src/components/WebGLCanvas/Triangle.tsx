@@ -1,4 +1,5 @@
-import { bindShadersToBuffers, initBuffers, initShaderProgram, Buffers } from './utils';
+import { bindShadersToBuffers, initBuffers, initShaderProgram } from '../../glUtils';
+import { Buffers } from '../../glUtils/types';
 
 export default class Triangle {
   gl: WebGLRenderingContext;
