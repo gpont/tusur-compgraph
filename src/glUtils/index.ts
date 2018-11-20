@@ -1,17 +1,4 @@
-export interface Buffers {
-  position: WebGLBuffer | null;
-  color: WebGLBuffer | null;
-}
-
-export interface ShaderInfo {
-  location: number;
-  numberComponents: number;
-  type: number;
-  normalize: boolean;
-  stride: number;
-  offset: number;
-  buffer: WebGLBuffer;
-}
+import { Buffers, ShaderInfo } from './types';
 
 function loadShader(
   gl: WebGLRenderingContext,

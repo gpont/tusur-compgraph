@@ -1,4 +1,6 @@
-import { bindShadersToBuffers, initBuffers, initShaderProgram } from '../components/WebGLCanvas/utils';
+import { bindShadersToBuffers, initBuffers, initShaderProgram } from '../glUtils';
+import fragmentShader from '../shaders/fragment/glPoints';
+import vertexShader from '../shaders/vertex/glPoints';
 
 import { TaskFuncBaseProps } from './types';
 
@@ -20,21 +22,7 @@ export default (props: TaskFuncBaseProps) => {
 
   const buffers = initBuffers(gl, vertices, colors);
 
-  const vertexCode = `
-      attribute vec3 coordinates;
-      void main(void) {
-        gl_Position = vec4(coordinates, 1.0);
-        gl_PointSize = 10.0;
-      }
-    `;
-
-  const fragmentCode = `
-      void main(void) {
-        gl_FragColor = vec4(0.0, 0.0, 0.0, 0.1);
-      }
-    `;
-
-  const shaderProgram = initShaderProgram(gl, vertexCode, fragmentCode);
+  const shaderProgram = initShaderProgram(gl, vertexShader, fragmentShader);
   gl.useProgram(shaderProgram);
 
   const shadersInfo = [{
@@ -50,9 +38,8 @@ export default (props: TaskFuncBaseProps) => {
 
   bindShadersToBuffers(gl, shadersInfo);
 
-  // gl.clearColor(0, 0, 0, 1);
-  // gl.clear(gl.COLOR_BUFFER_BIT);
-  // gl.viewport(0, 0, 640, 480);
+  gl.clearColor(0, 0, 0, 1);
+  gl.clear(gl.COLOR_BUFFER_BIT);
 
   gl.drawArrays(gl.POINTS, 0, 3);
 };

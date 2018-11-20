@@ -1,4 +1,5 @@
 import { Layout, Menu } from 'antd';
+import { SelectParam } from 'antd/lib/menu';
 import * as React from 'react';
 
 import { Scene } from '../../components/Scene/component';
@@ -70,6 +71,7 @@ const renderMenuItems = (items: MenuOption[]) =>
 
 const WebGLPage = () => {
   const [selectedTask, setSelectedTask] = React.useState(menuItems[0].value);
+  const onMenuItemSelect = ({ key }: SelectParam) => setSelectedTask(key);
 
   return (
     <Styled.Layout>
@@ -79,10 +81,7 @@ const WebGLPage = () => {
         <Styled.Menu
           mode="inline"
           selectedKeys={[selectedTask]}
-          // tslint:disable-next-line
-          onSelect={({ key }) => {
-            setSelectedTask(key);
-          }}
+          onSelect={onMenuItemSelect}
         >
           {renderMenuItems(menuItems)}
         </Styled.Menu>

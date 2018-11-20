@@ -2,6 +2,8 @@ import { GlPrimitives } from '../glUtils/types';
 
 import glLinesAndTrianglesHof from './glLinesAndTrianglesHof';
 import glPoints from './glPoints';
+import glQuadStrip from './glQuadStrip';
+import glQuads from './glQuads';
 import lab2sub3variant6 from './lab2sub3variant6';
 import task1 from './task1';
 import { TaskFunc } from './types';
@@ -17,6 +19,8 @@ const tasks: {
   [GlPrimitives.GL_TRIANGLES]: glLinesAndTrianglesHof(GlPrimitives.GL_TRIANGLES),
   [GlPrimitives.GL_TRIANGLE_STRIP]: glLinesAndTrianglesHof(GlPrimitives.GL_TRIANGLE_STRIP),
   [GlPrimitives.GL_TRIANGLE_FAN]: glLinesAndTrianglesHof(GlPrimitives.GL_TRIANGLE_FAN),
+  [GlPrimitives.GL_QUADS]: glQuads,
+  [GlPrimitives.GL_QUAD_STRIP]: glQuadStrip,
   'Variant 6': lab2sub3variant6,
 };
 
