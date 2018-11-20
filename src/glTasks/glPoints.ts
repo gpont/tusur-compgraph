@@ -1,4 +1,5 @@
 import { bindShadersToBuffers, initBuffers, initShaderProgram } from '../glUtils';
+import { loadShaders } from '../utils/loadShaders';
 
 import { TaskFuncBaseProps } from './types';
 
@@ -20,39 +21,27 @@ export default (props: TaskFuncBaseProps) => {
 
   const buffers = initBuffers(gl, vertices, colors);
 
-  const vertexCode = `
-      attribute vec3 coordinates;
-      void main(void) {
-        gl_Position = vec4(coordinates, 1.0);
-        gl_PointSize = 10.0;
-      }
-    `;
+  loadShaders(['task1.vert', 'task1.frag'])
+    .then(([vertexCode, fragmentCode]: string[]) => {
+      const shaderProgram = initShaderProgram(gl, vertexCode, fragmentCode);
+      gl.useProgram(shaderProgram);
 
-  const fragmentCode = `
-      void main(void) {
-        gl_FragColor = vec4(0.0, 0.0, 0.0, 0.1);
-      }
-    `;
+      const shadersInfo = [{
+        location: gl.getAttribLocation(shaderProgram, 'coordinates'),
+        numberComponents: 3,
+        type: gl.FLOAT,
+        normalize: false,
+        stride: 0,
+        offset: 0,
+        // TODO: May be null in some cases
+        buffer: buffers.position as WebGLBuffer,
+      }];
 
-  const shaderProgram = initShaderProgram(gl, vertexCode, fragmentCode);
-  gl.useProgram(shaderProgram);
+      bindShadersToBuffers(gl, shadersInfo);
 
-  const shadersInfo = [{
-    location: gl.getAttribLocation(shaderProgram, 'coordinates'),
-    numberComponents: 3,
-    type: gl.FLOAT,
-    normalize: false,
-    stride: 0,
-    offset: 0,
-    // TODO: May be null in some cases
-    buffer: buffers.position as WebGLBuffer,
-  }];
+      gl.clearColor(0, 0, 0, 1);
+      gl.clear(gl.COLOR_BUFFER_BIT);
 
-  bindShadersToBuffers(gl, shadersInfo);
-
-  // gl.clearColor(0, 0, 0, 1);
-  // gl.clear(gl.COLOR_BUFFER_BIT);
-  // gl.viewport(0, 0, 640, 480);
-
-  gl.drawArrays(gl.POINTS, 0, 3);
+      gl.drawArrays(gl.POINTS, 0, 3);
+    });
 };
