@@ -1,4 +1,4 @@
-import { bindShadersToBuffers, initBuffers, initShaderProgram } from '../components/WebGLCanvas/utils';
+import { bindShadersToBuffers, initBuffers, initShaderProgram } from '../glUtils';
 
 import { TaskFuncBaseProps } from './types';
 

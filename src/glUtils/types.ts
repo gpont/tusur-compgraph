@@ -9,3 +9,18 @@ export enum GlPrimitives {
   GL_QUADS = 'GL_QUADS',
   GL_QUAD_STRIP = 'GL_QUAD_STRIP',
 }
+
+export interface Buffers {
+  position: WebGLBuffer | null;
+  color: WebGLBuffer | null;
+}
+
+export interface ShaderInfo {
+  location: number;
+  numberComponents: number;
+  type: number;
+  normalize: boolean;
+  stride: number;
+  offset: number;
+  buffer: WebGLBuffer;
+}
