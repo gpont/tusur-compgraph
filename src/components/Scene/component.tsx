@@ -12,9 +12,10 @@ const execTask = <K extends RootTasksType>(task: K, props: TaskFuncBaseProps) =>
   if (tasks[task] === undefined) {
     throw Error(`Handler for ${task} is undefined`);
   }
-  // Idk why func here may be undefined
-  tasks[task]!(props);
+
+  tasks[task](props);
 };
+
 export const Scene = (props: SceneProps) => {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
