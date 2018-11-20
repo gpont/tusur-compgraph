@@ -1,8 +1,26 @@
 import { bindShadersToBuffers, initBuffers, initShaderProgram } from '../components/WebGLCanvas/utils';
+import { GlPrimitives } from '../glUtils/types';
 
 import { TaskFuncBaseProps } from './types';
 
-export default ({ gl }: TaskFuncBaseProps) => {
+type GlType =
+  GlPrimitives.GL_LINES
+  | GlPrimitives.GL_LINE_STRIP
+  | GlPrimitives.GL_LINE_LOOP
+  | GlPrimitives.GL_TRIANGLES
+  | GlPrimitives.GL_TRIANGLE_STRIP
+  | GlPrimitives.GL_TRIANGLE_FAN;
+
+export default (type: GlType) => ({ gl }: TaskFuncBaseProps) => {
+  const typesMap = {
+    [GlPrimitives.GL_LINES]: gl.LINES,
+    [GlPrimitives.GL_LINE_STRIP]: gl.LINE_STRIP,
+    [GlPrimitives.GL_LINE_LOOP]: gl.LINE_LOOP,
+    [GlPrimitives.GL_TRIANGLES]: gl.TRIANGLES,
+    [GlPrimitives.GL_TRIANGLE_STRIP]: gl.TRIANGLE_STRIP,
+    [GlPrimitives.GL_TRIANGLE_FAN]: gl.TRIANGLE_FAN,
+  };
+
   const vertices = [
     -0.7, -0.1, 0,
     -0.3, 0.6, 0,
@@ -65,5 +83,5 @@ export default ({ gl }: TaskFuncBaseProps) => {
 
   bindShadersToBuffers(gl, shadersInfo);
 
-  gl.drawArrays(gl.LINES, 0, 6);
+  gl.drawArrays(typesMap[type], 0, 6);
 };
