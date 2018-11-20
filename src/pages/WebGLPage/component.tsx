@@ -42,6 +42,8 @@ const menuItems: MenuOption[] = [
         { value: GlPrimitives.GL_QUADS },
         { value: GlPrimitives.GL_QUAD_STRIP },
       ],
+    }, {
+      value: 'Variant 6',
     }],
   },
 ];
