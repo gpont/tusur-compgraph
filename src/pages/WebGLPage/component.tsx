@@ -27,8 +27,8 @@ const menuItems: MenuOption[] = [
       value: 'lines',
       children: [
         { value: GlPrimitives.GL_LINES },
-        { value: GlPrimitives.GL_LINES_STRIP },
-        { value: GlPrimitives.GL_LINES_LOOP },
+        { value: GlPrimitives.GL_LINE_STRIP },
+        { value: GlPrimitives.GL_LINE_LOOP },
       ],
     }, {
       value: 'triangles',
@@ -43,6 +43,8 @@ const menuItems: MenuOption[] = [
         { value: GlPrimitives.GL_QUADS },
         { value: GlPrimitives.GL_QUAD_STRIP },
       ],
+    }, {
+      value: 'Variant 6',
     }],
   },
 ];
