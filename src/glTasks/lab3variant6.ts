@@ -151,23 +151,17 @@ export default ({ gl }: TaskFuncBaseProps) => {
   let lastRenderTime = Date.now();
 
   const render = () => {
-    // Запрашиваем рендеринг на следующий кадр
     requestAnimationFrame(render);
 
-    // Получаем время прошедшее с прошлого кадра
     const time = Date.now();
     const dt = lastRenderTime - time;
 
-    // Вращаем куб относительно оси Y
     mat4.rotateY(cubeMatrix, cubeMatrix, dt / 1000);
-    // Вращаем куб относительно оси Z
     mat4.rotateZ(cubeMatrix, cubeMatrix, dt / 1000);
 
-    // Очищаем сцену, закрашивая её в белый цвет
     gl.clearColor(1.0, 1.0, 1.0, 1.0);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-    // Включаем фильтр глубины
     gl.enable(gl.DEPTH_TEST);
 
     gl.useProgram(shaderProgram);
