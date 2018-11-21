@@ -4,15 +4,15 @@ import glLinesAndTrianglesHof from './glLinesAndTrianglesHof';
 import glPoints from './glPoints';
 import glQuadStrip from './glQuadStrip';
 import glQuads from './glQuads';
+import lab1 from './lab1';
 import lab2sub3variant6 from './lab2sub3variant6';
 import lab3variant6 from './lab3variant6';
-import task1 from './task1';
 import { TaskFunc } from './types';
 
 const tasks: {
   [name: string]: TaskFunc;
 } = {
-  'Lab 1': task1,
+  'Lab 1': lab1,
   [GlPrimitives.GL_POINTS]: glPoints,
   [GlPrimitives.GL_LINES]: glLinesAndTrianglesHof(GlPrimitives.GL_LINES),
   [GlPrimitives.GL_LINE_STRIP]: glLinesAndTrianglesHof(GlPrimitives.GL_LINE_STRIP),
