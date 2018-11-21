@@ -47,6 +47,12 @@ const menuItems: MenuOption[] = [
       value: 'Variant 6',
     }],
   },
+  {
+    value: 'Lab 3',
+    children: [{
+      value: 'Lab 3 variant 6',
+    }],
+  },
 ];
 
 const renderMenuItems = (items: MenuOption[]) =>

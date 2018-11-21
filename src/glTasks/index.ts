@@ -5,6 +5,7 @@ import glPoints from './glPoints';
 import glQuadStrip from './glQuadStrip';
 import glQuads from './glQuads';
 import lab2sub3variant6 from './lab2sub3variant6';
+import lab3variant6 from './lab3variant6';
 import task1 from './task1';
 import { TaskFunc } from './types';
 
@@ -22,6 +23,7 @@ const tasks: {
   [GlPrimitives.GL_QUADS]: glQuads,
   [GlPrimitives.GL_QUAD_STRIP]: glQuadStrip,
   'Variant 6': lab2sub3variant6,
+  'Lab 3 variant 6': lab3variant6,
 };
 
 export default tasks;

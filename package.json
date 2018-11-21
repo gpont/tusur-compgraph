@@ -9,12 +9,14 @@
     "@types/styled-components": "^4.1.0",
     "antd": "^3.10.7",
     "craco-antd": "^1.2.0",
+    "gl-matrix": "^2.8.1",
     "react": "^16.7.0-alpha.2",
     "react-dom": "^16.7.0-alpha.2",
     "react-scripts": "2.1.1",
     "styled-components": "^4.1.1"
   },
   "devDependencies": {
+    "@types/gl-matrix": "^2.4.4",
     "@types/react": "~16.7.3",
     "@types/react-dom": "^16.0.9",
     "babel-plugin-import": "^1.11.0",
