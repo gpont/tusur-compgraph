@@ -49,9 +49,10 @@ const menuItems: MenuOption[] = [
   },
   {
     value: 'Lab 3',
-    children: [{
-      value: 'Lab 3 variant 6',
-    }],
+    children: [
+      { value: 'Lab 3 variant 6' },
+      { value: 'Lab 3 variant 7' },
+    ],
   },
 ];
 
